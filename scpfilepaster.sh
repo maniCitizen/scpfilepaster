@@ -20,7 +20,7 @@ DOMAIN_NAME="domain_name.txt"
 PASSWORD="password.txt"
 
 #Get the input from the file and do the thing
-paste -d@ "${DOMAIN_NAME}" "${PASSWORD}" | while IFS="@" read -r domain password
+while IFS="," read -r domain password
 do
 cat ${ORIGIN_FILE_PATH} | sshpass -p ${password} ssh -p ${SSH_PORT} -T -o StrictHostKeyChecking=no root@${domain} "cat >> ${DESTINATION_FILE_PATH}"
-done
+done < data.csv
